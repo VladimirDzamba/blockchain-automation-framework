@@ -1,0 +1,26 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: authority-dtg
+  annotations:
+    flux.weave.works/automated: "false"
+  namespace: authority-ns
+spec:
+  releaseName: authority-dtg
+  chart:
+    path: platforms/hyperledger-indy/charts/indy-domain-genesis
+    git: ssh://git@github.com/VladimirDzamba/blockchain-automation-framework.git
+    ref: development-environment
+  values:
+    metadata:
+      name: authority-dtg
+      namespace: authority-ns
+    organization:
+      name: authority
+    configmap:
+      domainGenesis: |-
+        {"reqSignature":{},"txn":{"data":{"alias":"authority-trustee","dest":"SToYESTeFaxhV144sYxm2T","role":"0","verkey":"EsudpXkuoD8L4nFowAmTtX3M3wn29zRVSrLTeZNUmbR9"},"metadata":{},"type":"1"},"txnMetadata":{"seqNo":1},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"alias":"university-steward-1","dest":"V58myBoMZuTqZU3Vy5Unvx","role":"2","verkey":"GJPXacQjY9Gwz3TzbTAH96h7mEbhHhwQdymEDPiBjNN6"},"metadata":{"from":"SToYESTeFaxhV144sYxm2T"},"type":"1"},"txnMetadata":{"seqNo":2},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"alias":"university-steward-2","dest":"6M5e6JQqqusgQggxXxcZgr","role":"2","verkey":"3v1EukVa6ABZRH2pB1pX499o3dRM9mAaJT4ZTDQ4oika"},"metadata":{"from":"SToYESTeFaxhV144sYxm2T"},"type":"1"},"txnMetadata":{"seqNo":3},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"alias":"university-steward-3","dest":"gQpYzypSGg1TQfNXVBH5B","role":"2","verkey":"NUrGmk3Nksupzf8BgTWnEsZpPWQSxd236YFHrTCfsjE"},"metadata":{"from":"SToYESTeFaxhV144sYxm2T"},"type":"1"},"txnMetadata":{"seqNo":4},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"alias":"university-steward-4","dest":"3uXQaNndKbLSfN5hWB1asU","role":"2","verkey":"2arPFx53mPydFixmDjax8cseBPGE72GPwsDRr3A85JQZ"},"metadata":{"from":"SToYESTeFaxhV144sYxm2T"},"type":"1"},"txnMetadata":{"seqNo":5},"ver":"1"}
