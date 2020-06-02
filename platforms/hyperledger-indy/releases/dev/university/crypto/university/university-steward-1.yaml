@@ -1,0 +1,31 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: university-university-steward-1
+  annotations:
+    flux.weave.works/automated: "false"
+  namespace: university-ns
+spec:
+  releaseName: university-university-steward-1
+  chart:
+    path: platforms/hyperledger-indy/charts/indy-key-mgmt
+    git: ssh://git@github.com/VladimirDzamba/blockchain-automation-framework.git
+    ref: development-environment
+  values:
+    metadata:
+      name: university-university-steward-1
+      namespace: university-ns
+    network:
+      name: baf
+    image:
+      name: university
+      repository: build.dev.di-uisp-accenture.com/indy-key-mgmt:1.11.0
+      pullSecret: regcred
+    vault:
+      address: http://192.168.99.209:16196
+      keyPath: university.stewards
+      identity: university-steward-1
+      auth_path: kubernetes-university-admin-auth
+    account:
+      service: university-admin-vault-auth
+      role: rw
