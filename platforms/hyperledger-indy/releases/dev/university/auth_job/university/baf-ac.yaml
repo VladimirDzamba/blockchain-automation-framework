@@ -1,0 +1,36 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: university-baf-ac-auth-job
+  annotations:
+    flux.weave.works/automated: "false"
+  namespace: university-ns
+spec:
+  releaseName: university-baf-ac-auth-job
+  chart:
+    path: platforms/hyperledger-indy/charts/indy-auth-job
+    git: ssh://git@github.com/VladimirDzamba/blockchain-automation-framework.git
+    ref: development-environment
+  values:
+    metadata:
+      name: university-baf-ac-auth-job
+      namespace: university-ns
+    network:
+      name: baf
+      kubernetes_url: https://192.168.99.209:8443
+    image:
+      name: university
+      repository: alpine:3.9.4
+    vault:
+      address: http://192.168.99.209:16196
+      keyPath: university.baf-ac
+      identity: baf-ac
+      admin_auth_path: kubernetes-university-admin-auth
+      policy: university-baf-ac-ro
+      policy_content: path \"/university/+/+/+/public*\" { capabilities = [ \"read\", \"list\" ] }
+      auth_path: kubernetes-university-baf-ac-auth
+    account:
+      admin_service: university-admin-vault-auth
+      admin_role: rw
+      service: university-baf-ac-vault-auth
+      role: ro
