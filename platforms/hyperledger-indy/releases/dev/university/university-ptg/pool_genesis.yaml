@@ -1,0 +1,25 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: university-ptg
+  annotations:
+    flux.weave.works/automated: "false"
+  namespace: university-ns
+spec:
+  releaseName: university-ptg
+  chart:
+    path: platforms/hyperledger-indy/charts/indy-pool-genesis
+    git: ssh://git@github.com/VladimirDzamba/blockchain-automation-framework.git
+    ref: development-environment
+  values:
+    metadata:
+      name: university-ptg
+      namespace: university-ns
+    organization:
+      name: university
+    configmap:
+      poolGenesis: |-
+        {"reqSignature":{},"txn":{"data":{"data":{"alias":"university-steward-1","blskey":"4aRcJtKptxGjyg6diYq6kS38PryvUvPP2pbXckgt8wda9uUBztUnGn59utiiD78Z9aZaaJ3BQ2AuookcdgS34L1B8HKmWXqZG12zB6sU1bt8rxayRteA3gBWxyqQzdve674kJQvStdWc4zToAKnmdfBZhagqfbnh5Tb95niakfsS56X","blskey_pop":"QnEfWCGnJFQBGeZZgbkHXh9WpSQRESKAb9Nvx2HEPwoFZG1pYXLagRqFqr7qzREGgTRFCJbTZWnSomwDpmKnERkA9uXw37huQSUGeEhn6NJvugY7uN8kRTghWVfKJE1Wwez8PS8mPtQYDc5LC9ugJztnLEdnNG6PTQA3aQYAFhZQN3","client_ip":"192.168.99.209","client_port":15712,"node_ip":"192.168.99.209","node_port":15711,"services":["VALIDATOR"]},"dest":"GJPXacQjY9Gwz3TzbTAH96h7mEbhHhwQdymEDPiBjNN6"},"metadata":{"from":"V58myBoMZuTqZU3Vy5Unvx"},"type":"0"},"txnMetadata":{"seqNo":1,"txnId":"16bcef3d14020eac552e3f893b83f00847420a02cbfdc80517425023b75f124e"},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"data":{"alias":"university-steward-2","blskey":"3anbbR3FLuxjmXyFPwokkvqkecAmefkG2hh3C2xVrmZqbUktvWm7pdsjbMB6J4x92Q6pfYZAE1mgXHyny7gTYVTftzru22JU5X4CjLPQZwEkHStpViguk3X855rhQQ9vm2JZKQGtSjCzDJwGkSPYuvQWrGSTXwNU3TZAhVnD9B7AMmR","blskey_pop":"R8yeTTCzJESyz3FixU1x5pJEx6DDLy2TE2aL77zABvMzmr8opfrp5kj5xaDfpN9jf6QgCLQ6Uk32FaACvgGadpo2EYtxwHECBuKLbBsPPTDY2xFxLVHm4ic5Y2MA55yVcGn89GPCfZtYRwqLTDCpYQAz8fC1CcdgaG8xtkavFCfCwR","client_ip":"192.168.99.209","client_port":15722,"node_ip":"192.168.99.209","node_port":15721,"services":["VALIDATOR"]},"dest":"3v1EukVa6ABZRH2pB1pX499o3dRM9mAaJT4ZTDQ4oika"},"metadata":{"from":"6M5e6JQqqusgQggxXxcZgr"},"type":"0"},"txnMetadata":{"seqNo":2,"txnId":"ab3146fcbe19c6525fc9c325771d6d6474f8ddec0f2da425774a1687a4afe949"},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"data":{"alias":"university-steward-3","blskey":"4GCUZwmohtwqM9EFxW5qFWdHDxkeed8A7Zmcv7FUJoEMXaqETYy1GykgSXPUtbJtmztn6fgtwXgTnbJ8Hj1Nn1oTqn6t8xfAoeEpcTVBVzBUcDGgpeg1n9q56czVVX1KGFJowe2Zzokq1bDEBXsttSuNmj3EkpTmNrwAmaXSz9RNPc1","blskey_pop":"RGbbL4Ja7nwwgHuEPTmXwX8DVAeBvjPqpCjbzMbDL2feGLNFvmq5DjtvH4MK7LUncZmwUsvHHHPyEX4dPk6GFz5mLWaVSHrXbpsshosQQUAkBNXxRuXMZQrRUccGRjhpYRCfNHHC2u5MZ5CMq4Cw6EazT1ms1Ktz9HR9kTUNAi3HeX","client_ip":"192.168.99.209","client_port":15732,"node_ip":"192.168.99.209","node_port":15731,"services":["VALIDATOR"]},"dest":"NUrGmk3Nksupzf8BgTWnEsZpPWQSxd236YFHrTCfsjE"},"metadata":{"from":"gQpYzypSGg1TQfNXVBH5B"},"type":"0"},"txnMetadata":{"seqNo":3,"txnId":"7e8d53e5eac65d5bf5481da4a54c99be211c10a79e7b02e1a2f038d0bab14cb4"},"ver":"1"}
+        {"reqSignature":{},"txn":{"data":{"data":{"alias":"university-steward-4","blskey":"2htZ9AVzY4ANTjZniZcUybWgpGDak9WRWAzV6aV2CmApkkvRTDtskp1SxD5M1ppuHW6rpEeX1c8H3nsaReutqTR62QdhbMTGNDZbhkJ9kUcFvptNAvswZAqh2xfzbJWR2J5DvPVGAzrMLKn9ywHzWtQdZL2t3uHPLdYxi7VWTzNqjKb","blskey_pop":"R8rJ984SZk1p3H4Sc3Q52dfYNLXHmao1a2ZTftNikhR9WaHVzEuSGTVDCkAD49jV7d7fPfA6R26UmFbWerZJtWtY8jsnXtHbWjK7nKtuzhM3KVSyXYMhV1Rxq4m4AVdkgVyafxo71ugigANpQaWLuMHrefyMku89BCruxgffr261qh","client_ip":"192.168.99.209","client_port":15742,"node_ip":"192.168.99.209","node_port":15741,"services":["VALIDATOR"]},"dest":"2arPFx53mPydFixmDjax8cseBPGE72GPwsDRr3A85JQZ"},"metadata":{"from":"3uXQaNndKbLSfN5hWB1asU"},"type":"0"},"txnMetadata":{"seqNo":4,"txnId":"49a73230170e4b2a3c904ea4fa36e948e0a310d63438fee0212e7f904d0d3b25"},"ver":"1"}
