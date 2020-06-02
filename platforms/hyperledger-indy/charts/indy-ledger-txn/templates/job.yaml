@@ -30,6 +30,7 @@ spec:
       containers:
       - name: init-container
         image: "{{ $.Values.image.cli.repository }}"
+        imagePullPolicy: Never
         stdin: true
         tty: true
         command: ["sh", "-c"]
@@ -76,6 +77,7 @@ spec:
 
       - name: "{{ $.Values.image.cli.name }}"
         image: "{{ $.Values.image.cli.repository }}"
+        imagePullPolicy: Never
         stdin: true
         tty: true
         command: ["sh", "-c"]

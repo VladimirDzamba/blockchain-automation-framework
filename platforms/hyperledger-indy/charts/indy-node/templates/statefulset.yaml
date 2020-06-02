@@ -20,7 +20,7 @@ spec:
       initContainers:
       - name:  "{{ $.Values.image.initContainer.name }}"
         image:  "{{ $.Values.image.initContainer.repository }}"
-        imagePullPolicy: Always
+        imagePullPolicy: Never
         env:
          - name: VAULT_ADDR
            value: {{ $.Values.vault.address }}
@@ -115,7 +115,7 @@ spec:
       containers:
         - name: "{{ $.Values.image.indyNode.name }}"
           image: "{{ $.Values.image.indyNode.repository }}"
-          imagePullPolicy: Always
+          imagePullPolicy: Never
           ports:
             - containerPort: {{ $.Values.node.port }}
             - containerPort: {{ $.Values.client.port }}

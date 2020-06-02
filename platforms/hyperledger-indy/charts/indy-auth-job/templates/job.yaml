@@ -41,7 +41,7 @@ spec:
               export VAULT_SA_NAME=$(kubectl get sa {{ $.Values.account.service }} -n {{ $.Values.metadata.namespace }} -o jsonpath="{.secrets[*]['name']}");
 
               export SA_JWT_TOKEN=$(kubectl get secret $VAULT_SA_NAME -n {{ $.Values.metadata.namespace }} -o jsonpath="{.data.token}" | base64 -d; echo)
-
+              
               VAULT_TOKEN="$(curl --request POST --data '{"jwt": "'"$KUBE_TOKEN"'", "role": "{{ $.Values.account.admin_role }}"}' -s -k {{ $.Values.vault.address }}/v1/auth/{{ $.Values.vault.admin_auth_path }}/login | jq -r '.auth.client_token')";
 
               export SA_CA_CRT_ONELINE=$(kubectl get secret $VAULT_SA_NAME -n {{ $.Values.metadata.namespace }} -o jsonpath="{.data['ca\.crt']}" | base64 -d | awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}');
@@ -56,7 +56,11 @@ spec:
               # Check auth
 
               response_status=$(curl -s -o /dev/null -w "%{http_code}" --header "X-Vault-Token: $VAULT_TOKEN" {{ $.Values.vault.address }}/v1/auth/{{ $.Values.vault.auth_path }}/config);
-
+              echo token:;
+              echo $VAULT_TOKEN;
+              echo {{ $.Values.vault.address }}/v1/auth/{{ $.Values.vault.auth_path }}/config;
+              echo response:;
+              echo $response_status;
               validateVaultResponse ${response_status};
 
 
@@ -67,7 +71,11 @@ spec:
               # Check policy
 
               response_status=$(curl -s -o /dev/null -w "%{http_code}" --header "X-Vault-Token: $VAULT_TOKEN" {{ $.Values.vault.address }}/v1/sys/policy/{{ $.Values.vault.policy }});
-
+              echo token:;
+              echo $VAULT_TOKEN;
+              echo {{ $.Values.vault.address }}/v1/sys/policy/{{ $.Values.vault.policy }};
+              echo response:;
+              echo $response_status;
               validateVaultResponse ${response_status};
 
 
@@ -78,5 +86,9 @@ spec:
               # Check role
 
               response_status=$(curl -s -o /dev/null -w "%{http_code}" --header "X-Vault-Token: $VAULT_TOKEN" {{ $.Values.vault.address }}/v1/auth/{{ $.Values.vault.auth_path }}/role/{{ $.Values.account.role }});
-
+              echo token:;
+              echo $VAULT_TOKEN;
+              echo {{ $.Values.vault.address }}/v1/auth/{{ $.Values.vault.auth_path }}/role/{{ $.Values.account.role }};
+              echo response:;
+              echo $response_status;
               validateVaultResponse ${response_status};
