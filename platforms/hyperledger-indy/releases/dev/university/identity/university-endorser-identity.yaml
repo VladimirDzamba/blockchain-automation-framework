@@ -1,0 +1,43 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: university-university-endorser-transaction
+  annotations:
+    flux.weave.works/automated: "false"
+  namespace: university-ns
+spec:
+  releaseName: university-university-endorser-transaction
+  chart:
+    path: platforms/hyperledger-indy/charts/indy-ledger-txn
+    git: ssh://git@github.com/VladimirDzamba/blockchain-automation-framework.git
+    ref: development-environment
+  values:
+    metadata:
+      name: university-university-endorser-transaction
+      namespace: university-ns
+    network:
+      name: baf
+    image:
+      cli:
+        name: university
+        repository: build.dev.di-uisp-accenture.com/indy-ledger-txn:latest
+        pullSecret: regcred
+    vault:
+      address: http://192.168.99.209:16196
+      role: rw
+      serviceAccountName: university-admin-vault-auth
+      auth_path: kubernetes-university-admin-auth
+    organization:
+      name: university
+      adminIdentity:
+        name: authority-trustee
+        did: SToYESTeFaxhV144sYxm2T
+        path: authority/trustees
+      newIdentity:
+        name: university-endorser
+        role: ENDORSER
+        did: 9wZBgZP5eYcxMbqnHGijQN
+        verkey: 5sdYUTr3EjnyoGAXvov3Z9VSNgPbSyhV3wxFNKTo56ch
+        path: university/endorsers
+    node:
+      name: university
